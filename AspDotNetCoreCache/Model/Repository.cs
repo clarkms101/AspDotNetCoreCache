@@ -5,13 +5,13 @@ namespace AspDotNetCoreCache.Model
 {
     public class Repository : IRepository
     {
-        private readonly int _dataCount;
+        private readonly int _bookCount;
 
         public Repository()
         {
             // 取亂數決定回傳的資料量
             var ran= new Random();
-            _dataCount = ran.Next(1, 51);
+            _bookCount = ran.Next(1, 51);
         }
 
         /// <summary>
@@ -21,12 +21,15 @@ namespace AspDotNetCoreCache.Model
         public List<Book> GetBooks()
         {
             var books = new List<Book>();
-            for (var i = 1; i <= _dataCount; i++)
+            for (var i = 1; i <= _bookCount; i++)
             {
+                var ran= new Random();
+                var tagIndex = ran.Next(0, 4);
                 var book = new Book
                 {
                     Id = i,
-                    Name = $"測試{i}"
+                    Name = $"測試{i}",
+                    Tag = GetBookTags()[tagIndex]
                 };
                 books.Add(book);
             }
@@ -35,7 +38,18 @@ namespace AspDotNetCoreCache.Model
 
         public int GetBooksCount()
         {
-            return _dataCount;
+            return _bookCount;
+        }
+
+        public List<string> GetBookTags()
+        {
+            return new List<string>()
+            {
+                "C#",
+                "Linq",
+                "Asp.Net",
+                "Sql Server"
+            };
         }
     }
 }

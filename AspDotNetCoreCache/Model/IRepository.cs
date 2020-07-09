@@ -11,5 +11,7 @@ namespace AspDotNetCoreCache.Model
         List<Book> GetBooks();
 
         int GetBooksCount();
+
+        List<string> GetBookTags();
     }
 }
