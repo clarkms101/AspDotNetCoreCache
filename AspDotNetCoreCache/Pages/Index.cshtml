@@ -12,25 +12,30 @@
 
 <div>
     <p>資料筆數: @Model.BooksCount</p>
+
+    <cache expires-after="TimeSpan.FromSeconds(1)">
+        <p>資料筆數: @Model.BooksCountType2</p>
+    </cache>
+
     <p>標籤種類: @Model.BookTags</p>
 
     <table class="table">
         <thead>
-        <tr>
-            <th scope="col">BookId</th>
-            <th scope="col">BookName</th>
-            <th scope="col">BookTag</th>
-        </tr>
+            <tr>
+                <th scope="col">BookId</th>
+                <th scope="col">BookName</th>
+                <th scope="col">BookTag</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var book in Model.Books)
-        {
+            @foreach (var book in Model.Books)
+            {
             <tr>
                 <td>@book.Id</td>
                 <td>@book.Name</td>
                 <td>@book.Tag</td>
             </tr>
-        }
+            }
         </tbody>
     </table>
 </div>

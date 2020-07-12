@@ -17,6 +17,7 @@ namespace AspDotNetCoreCache.Pages
         private readonly RepositoryCache _repositoryCache;
         public List<Book> Books { get; set; }
         public int BooksCount { get; set; }
+        public int BooksCountType2 { get; set; }
         public string BookTags { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IRepository repository, RepositoryCache repositoryCache)
@@ -30,6 +31,7 @@ namespace AspDotNetCoreCache.Pages
         {
             Books = _repository.GetBooks();
             BooksCount = _repositoryCache.GetBooksCount();
+            BooksCountType2 = _repository.GetBooksCount();
             BookTags = _repositoryCache.GetBookTags();
         }
     }
