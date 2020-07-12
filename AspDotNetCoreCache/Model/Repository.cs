@@ -3,21 +3,28 @@ using System.Collections.Generic;
 
 namespace AspDotNetCoreCache.Model
 {
+    /// <summary>
+    /// 模擬從DB取得資料
+    /// </summary>
     public class Repository : IRepository
     {
         private readonly int _bookCount;
+        private readonly List<string> _bookTags;
 
         public Repository()
         {
             // 取亂數決定回傳的資料量
             var ran= new Random();
             _bookCount = ran.Next(1, 51);
+            _bookTags = new List<string>()
+            {
+                "C#",
+                "Linq",
+                "Asp.Net",
+                "Sql Server"
+            };
         }
 
-        /// <summary>
-        /// 模擬從DB取得資料
-        /// </summary>
-        /// <returns></returns>
         public List<Book> GetBooks()
         {
             var books = new List<Book>();
@@ -29,7 +36,7 @@ namespace AspDotNetCoreCache.Model
                 {
                     Id = i,
                     Name = $"測試{i}",
-                    Tag = GetBookTags()[tagIndex]
+                    Tag = _bookTags[tagIndex]
                 };
                 books.Add(book);
             }
@@ -43,13 +50,7 @@ namespace AspDotNetCoreCache.Model
 
         public List<string> GetBookTags()
         {
-            return new List<string>()
-            {
-                "C#",
-                "Linq",
-                "Asp.Net",
-                "Sql Server"
-            };
+            return _bookTags;
         }
     }
 }

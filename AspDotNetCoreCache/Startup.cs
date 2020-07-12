@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspDotNetCoreCache.Cache;
 using AspDotNetCoreCache.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,11 @@ namespace AspDotNetCoreCache
         {
             services.AddRazorPages();
 
+            services.AddSingleton<MyMemoryCache>();
+
             services.AddScoped<IRepository, Repository>();
+
+            services.AddScoped<RepositoryCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
