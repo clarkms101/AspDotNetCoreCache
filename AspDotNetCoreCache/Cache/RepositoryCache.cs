@@ -9,7 +9,7 @@ namespace AspDotNetCoreCache.Cache
     public class RepositoryCache
     {
         private readonly IRepository _repository;
-        private readonly MemoryCache  _cache;
+        private readonly MemoryCache _cache;
 
         public RepositoryCache(IRepository repository, MyMemoryCache memoryCache)
         {
@@ -27,10 +27,14 @@ namespace AspDotNetCoreCache.Cache
 
                 // 設定快取的使用量和到期時間
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    {
+                        // 撐個十秒 (10秒一到自動清除)
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
+                    }
                     // 使用1個單位
-                    .SetSize(1)
-                    // 撐個十秒
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(10));
+                    .SetSize(1);
+                    // 撐個十秒 (10秒內如果都沒有被使用才會清除)
+                    //.SetSlidingExpiration(TimeSpan.FromSeconds(10));
 
                 // 將資料和快取設定加到快取裡面
                 _cache.Set(cacheKey, cacheResult, cacheEntryOptions);
@@ -46,8 +50,10 @@ namespace AspDotNetCoreCache.Cache
                 cacheResult = _repository.GetBookTags().Aggregate((i, j) => i + "," + j);
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSize(1)
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(10));
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(10)
+                    }
+                    .SetSize(1);
 
                 _cache.Set(cacheKey, cacheResult, cacheEntryOptions);
             }
