@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AspDotNetCoreCache.Cache;
+using AspDotNetCoreCache.Config;
 using AspDotNetCoreCache.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,10 @@ namespace AspDotNetCoreCache
             services.AddScoped<IRepository, Repository>();
 
             services.AddScoped<RepositoryCache>();
+
+            services.Configure<RedisConfig>(Configuration.GetSection("RedisConfig"));
+
+            services.AddSingleton<MyRedisCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
